@@ -1363,6 +1363,12 @@ p {
   padding-top: 20px;
 }
 
+@media screen and (max-width: 480px) {
+  .footer__general-info {
+    padding-left: 25px;
+  }
+}
+
 .footer__general-info span {
   display: block;
   margin: 10px 0;
@@ -1559,12 +1565,12 @@ p {
 
 @media screen and (max-width: 576px) {
   .cross {
-    top: 90%;
+    top: 87%;
     left: 50%;
   }
 }
 
-.cross span, .cross__alert span {
+.cross span {
   height: 1px;
   display: block;
   float: left;
@@ -1697,6 +1703,13 @@ p {
     top: 0;
     right: 0;
   }
+}
+
+.cross__alert span {
+  height: 1px;
+  display: block;
+  float: left;
+  transition: all ease .3s;
 }
 
 .cross__alert span:nth-child(1) {
