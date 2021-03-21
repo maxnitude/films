@@ -1,0 +1,40 @@
+.modal__alert-content {
+    position: relative;
+	width: 750px;
+    min-height: 100px;
+	max-height: 300px;
+    padding: 35px 55px ;
+    background-color: #fff;
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #030303;
+	margin: 0 200px;
+}
+
+.modal__alert-content_title {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+
+.modal__alert-content_about {
+    display: block;
+    margin-bottom: 20px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.modal__alert-content_about:hover {
+    color: rgb(246, 221, 80);
+}
+
+.modal__alert-info ul {
+    list-style-type: disc;
+    width: 100%;
+}
+.modal__alert-info h4 {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 400;
+    margin-bottom: 10px;
+}

@@ -1,0 +1,59 @@
+<header class="header">
+    <div class="header__container">
+       
+        <div class="title">
+            <div class="title__logo"></div>
+                <h1 class="title__heading">The Films</h1>
+
+        </div>
+
+        <div class="menu">
+            <div class="menu__block">
+                <button class="menu__button">
+                    <span class="menu__title">Меню</span>
+                    <div class="menu__hamburger">
+                        <span id="spn"></span>
+                    </div>
+                </button>
+                <!-- код для раскрывающегося меню -->
+                <div class="menu__list menu__list__hidden">
+                    <ul class="main-list">
+                        <li class="movie"> <span>Фильмы</span>
+                            <ul class="sub-list">
+                                <li class="latest-movies">Новинки кино</li>
+                                <li class="popular-movies">Популярные фильмы</li>
+                                <li class="top-rated-movies">Рейтинг фильмов</li>
+                            </ul>
+                        </li>
+                        <li class="tv"> <span>Сериалы</span>
+                            <ul class="sub-list">
+                                <li class="latest-tvs">Сериалы в эфире</li>
+                                <li class="popular-tvs">Популярные сериалы</li>
+                                <li class="top-rated-tvs">Рейтинг сериалов</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="search">
+            <form class="search__form">
+                <div class="search__form-block">
+                    <input type="text" class="search__form-input" id="searchText"
+                        placeholder="Что ищем?">
+                    <div class="search__cross hide">
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+                <button class="search-button">
+                    <span class="search-button__text">Поиск</span>
+                    <img class="search-button__img" src="../img/icon-search.png" alt="Поиск">
+                </button>
+            </form>
+
+        </div>
+    </div>
+
+</header>
