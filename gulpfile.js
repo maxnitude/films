@@ -25,13 +25,22 @@ let path = {
     clean: './' + project_folder + '/'
 }
 
-let { src, dest } = require('gulp'),
+let {
+    src,
+    dest
+} = require('gulp'),
     gulp = require('gulp'),
+    ghPages = require('gulp-gh-pages'),
     browsersync = require('browser-sync').create(),
     fileinclude = require('gulp-file-include'),
     del = require('del'),
     scss = require('gulp-sass'),
     imagemin = require('gulp-imagemin');
+
+gulp.task('deploy', function () {
+    return gulp.src('./dist/**/*')
+        .pipe(ghPages());
+});
 
 function browserSync(params) {
     browsersync.init({
@@ -73,17 +82,19 @@ function images() {
         .pipe(
             imagemin({
                 progressive: true,
-                svgoPlugins: [{removeViewBox: false}],
+                svgoPlugins: [{
+                    removeViewBox: false
+                }],
                 interlaced: true,
                 optimizationLevel: 3
             })
-        )    
+        )
         .pipe(dest(path.build.img))
         .pipe(browsersync.stream())
 }
 
 function fonts() {
-    return src(path.src.fonts)   
+    return src(path.src.fonts)
         .pipe(dest(path.build.fonts))
         .pipe(browsersync.stream())
 }
@@ -93,7 +104,7 @@ function watchFiles(params) {
     gulp.watch([path.watch.css], css);
     gulp.watch([path.watch.js], js);
     gulp.watch([path.watch.img], images);
-    
+
 }
 
 function clean(params) {

@@ -388,6 +388,8 @@
         display: none;
         @media screen and (max-width: 576px) {
             display: block; 
+            background-image: url(../img/icon-search.png);
+            background-size: contain;
             height: 30px;
             width: 30px;
             margin: 0 auto;
