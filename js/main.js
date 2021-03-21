@@ -39,6 +39,7 @@ const DataBaseService = class {
     getData = async (url) => {
         const response = await fetch(url);
         if (response.ok) {
+            console.log(response)
             return await response.json();
         } else {
             throw new Error(`Не удалось получить данные по адресу ${url}`)
@@ -48,40 +49,38 @@ const DataBaseService = class {
     API_KEY = 'f10cd4d6067ee2ef892bdaef0bc81c2c';
     SERVER = 'https://api.themoviedb.org/3';
 
-    getSearchResult = async (query, page = 1) => {
-        await this.getData(`${this.SERVER}/search/movie?api_key=${this.API_KEY}&language=ru-RU&query=${query}&page=${page}`)
+    getSearchResult =  async (query, page = 1) => await this.getData(`${this.SERVER}/search/movie?api_key=${this.API_KEY}&language=ru-RU&query=${query}&page=${page}`);
+
+    getNowPlayingMovies =  (page = 1) => {
+        return  this.getData(`${this.SERVER}/movie/now_playing?api_key=${this.API_KEY}&language=ru-RU&page=${page}`)
     }
 
-    getNowPlayingMovies = async (page = 1) => {
-        return await this.getData(`${this.SERVER}/movie/now_playing?api_key=${this.API_KEY}&language=ru-RU&page=${page}`)
+    getAllGenres =  () => {
+        return  this.getData(`${this.SERVER}/genre/movie/list?api_key=${this.API_KEY}&language=ru-RU`)
     }
 
-    getAllGenres = async () => {
-        return await this.getData(`${this.SERVER}/genre/movie/list?api_key=${this.API_KEY}&language=ru-RU`)
+    getPopularMovies =  (page = 2) => {
+        return  this.getData(`${this.SERVER}/movie/popular?api_key=${this.API_KEY}&language=ru-RU&page=${page}`)
     }
 
-    getPopularMovies = async (page = 2) => {
-        return await this.getData(`${this.SERVER}/movie/popular?api_key=${this.API_KEY}&language=ru-RU&page=${page}`)
+    getTopRatedMovies =  (page = 1) => {
+        return  this.getData(`${this.SERVER}/movie/top_rated?api_key=${this.API_KEY}&language=ru-RU&page=${page}`)
     }
 
-    getTopRatedMovies = async (page = 1) => {
-        return await this.getData(`${this.SERVER}/movie/top_rated?api_key=${this.API_KEY}&language=ru-RU&page=${page}`)
+    getPopularTVs =  (page = 1) => {
+        return  this.getData(`${this.SERVER}/tv/popular?api_key=${this.API_KEY}&language=ru-RU&page=${page}`)
     }
 
-    getPopularTVs = async (page = 1) => {
-        return await this.getData(`${this.SERVER}/tv/popular?api_key=${this.API_KEY}&language=ru-RU&page=${page}`)
+   getTopRatedTVs =  (page = 1) => {
+        return  this.getData(`${this.SERVER}/tv/top_rated?api_key=${this.API_KEY}&language=ru-RU&page=${page}`)
     }
 
-   getTopRatedTVs = async (page = 1) => {
-        return await this.getData(`${this.SERVER}/tv/top_rated?api_key=${this.API_KEY}&language=ru-RU&page=${page}`)
+   getOnTheAirTVs =  (page = 1) => {
+        return  this.getData(`${this.SERVER}/tv/on_the_air?api_key=${this.API_KEY}&language=ru-RU&page=${page}`)
     }
 
-   getOnTheAirTVs = async (page = 1) => {
-        return await this.getData(`${this.SERVER}/tv/on_the_air?api_key=${this.API_KEY}&language=ru-RU&page=${page}`)
-    }
-
-    getUpcomingMovies = async (page = 1) => {
-        return await this.getData(`${this.SERVER}/movie/upcoming?api_key=${this.API_KEY}&language=ru-RU&page=${page}`)
+    getUpcomingMovies =  (page = 1) => {
+        return  this.getData(`${this.SERVER}/movie/upcoming?api_key=${this.API_KEY}&language=ru-RU&page=${page}`)
     }
 };
 
@@ -170,7 +169,7 @@ function createDataForRender(response) {
 // генерация карточки с фильмом 
 function renderCard(response) {
     if (response === null) {
-        contentHeader.innerHTML = `Ожидаемые фильмы и новинки проката`;
+        contentHeader.innerHTML = `Возможно, вам понравится`;
         new DataBaseService().getUpcomingMovies().then(createDataForRender).then(renderCard);
         loading.remove();
         viewMore.classList.add('hide');
@@ -405,7 +404,7 @@ viewMoreButton.addEventListener('click', (event) => {
     } else if (contentHeader.innerHTML == `Сериалы в эфире`) {
         new DataBaseService().getOnTheAirTVs(viewMorePointer).then(createDataForRender).then(renderCard);
         viewMorePointer++;
-    } else if (contentHeader.innerHTML == `Ожидаемые фильмы и новинки проката`) {
+    } else if (contentHeader.innerHTML == `Возможно, вам понравится`) {
         new DataBaseService().getUpcomingMovies(viewMorePointer).then(createDataForRender).then(renderCard);
         viewMorePointer++;
     };
