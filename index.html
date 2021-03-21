@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon/fav64.png">
+    <link rel="stylesheet" href="css/style.css">
+    <title>THE FILMS - все о фильмах</title>
+</head>
+
+<body>
+    <header class="header">
+    <div class="header__container">
+       
+        <div class="title">
+            <div class="title__logo"></div>
+                <h1 class="title__heading">The Films</h1>
+
+        </div>
+
+        <div class="menu">
+            <div class="menu__block">
+                <button class="menu__button">
+                    <span class="menu__title">Меню</span>
+                    <div class="menu__hamburger">
+                        <span id="spn"></span>
+                    </div>
+                </button>
+                <!-- код для раскрывающегося меню -->
+                <div class="menu__list menu__list__hidden">
+                    <ul class="main-list">
+                        <li class="movie"> <span>Фильмы</span>
+                            <ul class="sub-list">
+                                <li class="latest-movies">Новинки кино</li>
+                                <li class="popular-movies">Популярные фильмы</li>
+                                <li class="top-rated-movies">Рейтинг фильмов</li>
+                            </ul>
+                        </li>
+                        <li class="tv"> <span>Сериалы</span>
+                            <ul class="sub-list">
+                                <li class="latest-tvs">Сериалы в эфире</li>
+                                <li class="popular-tvs">Популярные сериалы</li>
+                                <li class="top-rated-tvs">Рейтинг сериалов</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="search">
+            <form class="search__form">
+                <div class="search__form-block">
+                    <input type="text" class="search__form-input" id="searchText"
+                        placeholder="Что ищем?">
+                    <div class="search__cross hide">
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+                <button class="search-button">
+                    <span class="search-button__text">Поиск</span>
+                    <img class="search-button__img" src="../img/icon-search.png" alt="Поиск">
+                </button>
+            </form>
+
+        </div>
+    </div>
+
+</header>
+    <main>
+        <div class="slider-container">
+    <div class="slider-wrapper">
+        <div class="slider">
+            <div class="wrap">
+
+                <div class="slider-item">
+                    <div class="film-poster"></div>
+                    <div class="film-description">
+                        <h1 class="film-description__name">Довод (Tenet)</h1>
+                        <h2 class="film-description__general-data">Боевик, 2020</h2>
+                        <p class="film-description__overview">После теракта в киевском оперном театре агент ЦРУ объединяется с британской разведкой, чтобы противостоять русскому олигарху, который сколотил состояние на торговле оружием. Для этого агенты используют инверсию времени — технологию будущего, позволяющую времени идти вспять.</p>
+                        <span class="film-description__producer">Режиссер: Кристофер Нолан</span>
+                        <span class="film-description__country"> Страна: Великобритания, США</span>
+                        <a 
+                            class="film-description__btn"
+                            href="https://www.youtube.com/watch?v=C6dZA-buNCw"
+                            target="_blank"
+                        >Смотреть трейлер</a>
+                    </div>
+                </div>
+                <div class="slider-item hide">
+                </div>
+                <div class="slider-item hide">
+                </div>
+                <div class="slider-item hide">
+                </div>
+
+                <div class="prev">
+                    <div class="arrow-left">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd"
+                                d="M13.993 19.997L5.996 12l7.997-7.997 1.414 1.414L8.824 12l6.583 6.583z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="next">
+                    <div class="arrow-right">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd"
+                                d="M10.007 4.003L18.004 12l-7.997 7.997-1.414-1.414L15.176 12 8.593 5.417z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="slider-dots">
+                <div class="dot dot-active"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+        <div class="main-content">
+    <div class="not-found hide"></div>
+    <section class="tv-shows">
+        
+        <div class="tv-shows__heading">
+            <h3 class="tv-shows__heading-info">Новинки кино</h3>
+        </div>
+
+        <div class="tv-shows__list"></div>
+
+        <div class="view_more">
+            <button class="view_more-button">
+                <span class="view_more-button_sign"></span>
+                <div class="view_more-button_title">
+                    <span>Загрузить еще</span>
+                </div>
+            </button>
+        </div>
+    </section>
+</div>   
+    </main>
+    <footer class="footer">
+    <div class="footer__container">
+        <div class="footer__general-info">
+            <span>Сайт использует API The Movie Database</span>
+            <span>Более подробно можно ознакомиться по 
+                <a href="https://www.themoviedb.org/documentation/api?language=ru"
+                target="_blank"
+                >ссылке</a>
+            </span>
+        </div>
+        <div class="footer__contacts">
+            <span>Контакты:</span>
+            <ul class="social-links">
+                <li>
+                    <a class="social-links__link"
+                        href="https://github.com/maxnitude?tab=repositories"
+                        target="_blank">
+                        <svg id="github"
+                            height="24"
+                            width="24" 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            viewBox="0 0 438.549 438.549" >
+                        <path d="M409.132,114.573c-19.608-33.596-46.205-60.194-79.798-79.8C295.736,15.166,259.057,5.365,219.271,5.365
+            c-39.781,0-76.472,9.804-110.063,29.408c-33.596,19.605-60.192,46.204-79.8,79.8C9.803,148.168,0,184.854,0,224.63
+            c0,47.78,13.94,90.745,41.827,128.906c27.884,38.164,63.906,64.572,108.063,79.227c5.14,0.954,8.945,0.283,11.419-1.996
+            c2.475-2.282,3.711-5.14,3.711-8.562c0-0.571-0.049-5.708-0.144-15.417c-0.098-9.709-0.144-18.179-0.144-25.406l-6.567,1.136
+            c-4.187,0.767-9.469,1.092-15.846,1c-6.374-0.089-12.991-0.757-19.842-1.999c-6.854-1.231-13.229-4.086-19.13-8.559
+            c-5.898-4.473-10.085-10.328-12.56-17.556l-2.855-6.57c-1.903-4.374-4.899-9.233-8.992-14.559
+            c-4.093-5.331-8.232-8.945-12.419-10.848l-1.999-1.431c-1.332-0.951-2.568-2.098-3.711-3.429c-1.142-1.331-1.997-2.663-2.568-3.997
+            c-0.572-1.335-0.098-2.43,1.427-3.289c1.525-0.859,4.281-1.276,8.28-1.276l5.708,0.853c3.807,0.763,8.516,3.042,14.133,6.851
+            c5.614,3.806,10.229,8.754,13.846,14.842c4.38,7.806,9.657,13.754,15.846,17.847c6.184,4.093,12.419,6.136,18.699,6.136
+            c6.28,0,11.704-0.476,16.274-1.423c4.565-0.952,8.848-2.383,12.847-4.285c1.713-12.758,6.377-22.559,13.988-29.41
+            c-10.848-1.14-20.601-2.857-29.264-5.14c-8.658-2.286-17.605-5.996-26.835-11.14c-9.235-5.137-16.896-11.516-22.985-19.126
+            c-6.09-7.614-11.088-17.61-14.987-29.979c-3.901-12.374-5.852-26.648-5.852-42.826c0-23.035,7.52-42.637,22.557-58.817
+            c-7.044-17.318-6.379-36.732,1.997-58.24c5.52-1.715,13.706-0.428,24.554,3.853c10.85,4.283,18.794,7.952,23.84,10.994
+            c5.046,3.041,9.089,5.618,12.135,7.708c17.705-4.947,35.976-7.421,54.818-7.421s37.117,2.474,54.823,7.421l10.849-6.849
+            c7.419-4.57,16.18-8.758,26.262-12.565c10.088-3.805,17.802-4.853,23.134-3.138c8.562,21.509,9.325,40.922,2.279,58.24
+            c15.036,16.18,22.559,35.787,22.559,58.817c0,16.178-1.958,30.497-5.853,42.966c-3.9,12.471-8.941,22.457-15.125,29.979
+            c-6.191,7.521-13.901,13.85-23.131,18.986c-9.232,5.14-18.182,8.85-26.84,11.136c-8.662,2.286-18.415,4.004-29.263,5.146
+            c9.894,8.562,14.842,22.077,14.842,40.539v60.237c0,3.422,1.19,6.279,3.572,8.562c2.379,2.279,6.136,2.95,11.276,1.995
+            c44.163-14.653,80.185-41.062,108.068-79.226c27.88-38.161,41.825-81.126,41.825-128.906
+                                    C438.536,184.851,428.728,148.168,409.132,114.573z"/>
+                        </svg>
+                        maxnitude
+                    </a>
+                </li>
+                <li>
+                    <a class="social-links__link"
+                        href="https://t.me/maxnitude"
+                        target="_blank">
+                        <svg id="telegram" 
+                            height="24" 
+                            width="24"
+                            viewBox="0 0 24 24"  
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="m.415 11.196 5.869 2.925c.227.112.495.104.712-.023l5.224-3.037-3.162 2.802c-.161.143-.253.347-.253.562v6.825c0 .72.919 1.023 1.35.451l2.537-3.373 6.274 3.573c.44.253 1.004-.001 1.106-.504l3.913-19.5c.117-.586-.466-1.064-1.008-.846l-22.5 8.775c-.604.236-.643 1.081-.062 1.37zm21.83-8.249-3.439 17.137-5.945-3.386c-.324-.185-.741-.103-.971.201l-1.585 2.107v-4.244l8.551-7.576c.677-.599-.101-1.664-.874-1.21l-11.39 6.622-3.992-1.989z"/>
+                        </svg>
+                        maxnitude
+                    </a>
+                </li>  
+            </ul>    
+        </div>
+    </div>
+</footer>
+    <div class="modal modal-hide">
+    <div class="modal__content">
+        <div class="modal__wrapper">
+            <div class="modal__heading">
+                <h2 class="modal__title"></h2>
+                <h3 class="modal__title_eng"></h3>
+            </div>
+
+            <div class="modal__poster">
+                <img class="modal__poster-image" src="img/no-poster.jpg" alt="Название шоу">
+            </div>
+            <div class="modal__description">
+                <div class="modal__genres">
+                    <h3>Жанр:</h3>
+                    <ul class="genres-list">
+                    </ul>
+                </div>
+                <div class="modal__rating">
+                    <h3>Рейтинг</h3>
+                    <span class="rating"></span>
+                </div> 
+            </div>
+            <div class="modal__overview">
+                <h3 dir="auto">Обзор: </h3>
+                <div class="overview">
+                    <p class="description"></p>
+                </div>
+            </div>
+        </div>
+        <div class="cross">
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</div>
+</div>
+    <div class="modal__alert hide">
+    <div class="modal__alert-content">
+        <h3 class="modal__alert-content_title"></h3>
+        <span class="modal__alert-content_about">Узнать подробности>></span>
+        <div class="modal__alert-info hide">
+            <h4>Для корректной работы поиска убедитесь, что :</h4>
+            <ul>
+                <li>Поисковый запрос не пустой;</li>
+                <li>Количество символов в поисковом запросе не превышает 25;</li>
+                <li>Не рекомендуется использование специальных символов, отличных от знаков препинания и букв.</li>
+            </ul>
+        </div>
+        <div class="cross__alert">
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</div>
+    <script src="js/main.js"></script>
+</body>
+</html>
