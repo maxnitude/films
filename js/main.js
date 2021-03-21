@@ -39,7 +39,6 @@ const DataBaseService = class {
     getData = async (url) => {
         const response = await fetch(url);
         if (response.ok) {
-            console.log(response)
             return await response.json();
         } else {
             throw new Error(`Не удалось получить данные по адресу ${url}`)

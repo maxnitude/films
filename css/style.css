@@ -1173,6 +1173,7 @@ p {
   grid-column-gap: 20px;
   grid-row-gap: 20px;
   justify-content: space-around;
+  padding-bottom: 20px;
 }
 
 @media screen and (max-width: 480px) {
@@ -1299,7 +1300,7 @@ p {
 .view_more {
   display: flex;
   justify-content: center;
-  padding: 25px 0 25px;
+  padding: 0 0 25px;
 }
 
 .view_more-button {
@@ -1412,7 +1413,7 @@ p {
   fill: #f6dd50;
 }
 
-.modal, .modal__alert {
+.modal {
   position: fixed;
   top: 0px;
   display: flex;
@@ -1425,7 +1426,7 @@ p {
 }
 
 @media screen and (max-width: 576px) {
-  .modal, .modal__alert {
+  .modal {
     transition: all 600ms cubic-bezier(0.25, 0, 0.07, 0.86);
   }
 }
@@ -1454,6 +1455,7 @@ p {
   .modal__content {
     min-width: 100vw;
     min-height: 100vh;
+    padding: 20px 5px 15px;
   }
 }
 
@@ -1503,13 +1505,21 @@ p {
 .modal__poster {
   grid-area: image;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
+  padding-left: 20px;
 }
 
 .modal__poster-image {
-  width: 90%;
+  width: 100%;
   box-shadow: 2px 2px 5px 1px rgba(53, 117, 184, 0.49);
+}
+
+@media screen and (max-width: 576px) {
+  .modal__poster-image {
+    width: auto;
+    height: 100%;
+  }
 }
 
 .modal__description {
@@ -1528,10 +1538,11 @@ p {
 @media screen and (max-width: 576px) {
   .modal__overview {
     grid-area: overview;
+    padding: 0 5px 15px 20px;
   }
 }
 
-.cross, .cross__alert {
+.cross {
   position: absolute;
   top: 0px;
   right: 0px;
@@ -1547,8 +1558,9 @@ p {
 }
 
 @media screen and (max-width: 576px) {
-  .cross, .cross__alert {
-    top: 25px;
+  .cross {
+    top: 90%;
+    left: 50%;
   }
 }
 
@@ -1559,8 +1571,7 @@ p {
   transition: all ease .3s;
 }
 
-.cross span:nth-child(1),
-.cross__alert span:nth-child(1) {
+.cross span:nth-child(1) {
   background-color: #2e2e2e;
   transform: rotate(45deg);
   transition-timing-function: ease-in-out;
@@ -1570,8 +1581,7 @@ p {
   transition: all ease .5s;
 }
 
-.cross span:nth-child(2),
-.cross__alert span:nth-child(2) {
+.cross span:nth-child(2) {
   background-color: #2e2e2e;
   transform: rotate(-45deg);
   transition-timing-function: ease-in-out;
@@ -1581,11 +1591,43 @@ p {
   transition: all ease .5s;
 }
 
+.cross span:nth-child(3) {
+  display: none;
+}
+
+@media screen and (max-width: 576px) {
+  .cross span:nth-child(3) {
+    display: block;
+    position: absolute;
+    top: 25%;
+    left: -200%;
+  }
+}
+
+.modal__alert {
+  position: fixed;
+  top: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  z-index: 111;
+  background-color: rgba(15, 15, 15, 0.7);
+}
+
+@media screen and (max-width: 576px) {
+  .modal__alert {
+    transition: all 600ms cubic-bezier(0.25, 0, 0.07, 0.86);
+  }
+}
+
 .modal__alert-content {
   position: relative;
   width: 750px;
+  min-width: 576px;
   min-height: 100px;
-  max-height: 300px;
+  max-height: 576px;
   padding: 35px 55px;
   background-color: #fff;
   font-size: 14px;
@@ -1593,6 +1635,14 @@ p {
   font-weight: 400;
   color: #030303;
   margin: 0 200px;
+}
+
+@media screen and (max-width: 576px) {
+  .modal__alert-content {
+    min-width: 100vw;
+    min-height: auto;
+    padding: 20px 5px 15px;
+  }
 }
 
 .modal__alert-content_title {
@@ -1617,10 +1667,56 @@ p {
   width: 100%;
 }
 
+.modal__alert-info li {
+  padding: 5px 0;
+}
+
 .modal__alert-info h4 {
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
   margin-bottom: 10px;
+}
+
+.cross__alert {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 30px;
+  height: 30px;
+  float: right;
+  text-align: center;
+  margin-top: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+  transform: rotate(0deg);
+  transition: all ease .5s;
+}
+
+@media screen and (max-width: 576px) {
+  .cross__alert {
+    top: 0;
+    right: 0;
+  }
+}
+
+.cross__alert span:nth-child(1) {
+  background-color: #2e2e2e;
+  transform: rotate(45deg);
+  transition-timing-function: ease-in-out;
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  transition: all ease .5s;
+}
+
+.cross__alert span:nth-child(2) {
+  background-color: #2e2e2e;
+  transform: rotate(-45deg);
+  transition-timing-function: ease-in-out;
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  transition: all ease .5s;
 }
 
 .preloader-loading {
