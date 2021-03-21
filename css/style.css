@@ -852,6 +852,8 @@ p {
 @media screen and (max-width: 576px) {
   .search-button__img {
     display: block;
+    background-image: url(../img/icon-search.png);
+    background-size: contain;
     height: 30px;
     width: 30px;
     margin: 0 auto;
