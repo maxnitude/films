@@ -58,7 +58,6 @@ function createDataForRender(response) {
     };
 
     if (response.results.length == 0) {
-        const notFound = document.querySelector('.not-found');
         notFound.innerHTML = 'По вашему запросу ничего не найдено :(';
         notFound.classList.remove('hide');
         return null;
@@ -76,7 +75,7 @@ function createDataForRender(response) {
 // генерация карточки с фильмом 
 function renderCard(response) {
     if (response === null) {
-        contentHeader.innerHTML = `Ожидаемые фильмы и новинки проката`;
+        contentHeader.innerHTML = `Возможно, вам понравится`;
         new DataBaseService().getUpcomingMovies().then(createDataForRender).then(renderCard);
         loading.remove();
         viewMore.classList.add('hide');

@@ -2,10 +2,9 @@
 
 const IMG_URL = 'https://image.tmdb.org/t/p/w185_and_h278_bestv2';
 const menuButton = document.querySelector('.menu__button');
-const hamburger = document.querySelector('.menu__hamburger');
-const dropdownMenu = document.querySelector('.menu__list');
 const itemList = document.querySelector('.tv-shows__list');
 const contentHeader = document.querySelector('.tv-shows__heading-info');
+const notFound = document.querySelector('.not-found');
 const tvShows = document.querySelector('.tv-shows');
 //прелоадер
 const loading = document.createElement ('div');
@@ -26,7 +25,6 @@ new DataBaseService().getAllGenres().then((response) => {
 )
 
 @@include('render.js');
-
 
 //вспомогательная функция, которая стирает ранее отображенные карточки при новом запросе
 const deleteCardList = function (response) {
@@ -91,60 +89,51 @@ const latestMovies = document.querySelector ('.latest-movies'),
     topMovies = document.querySelector ('.top-rated-movies'),
     latestTVs = document.querySelector ('.latest-tvs'),
     popTVs = document.querySelector ('.popular-tvs'),
-    topTVs = document.querySelector ('.top-rated-tvs');
+    topTVs = document.querySelector ('.top-rated-tvs'),
+    hamburger = document.querySelector('.menu__hamburger'),
+    dropdownMenu = document.querySelector('.menu__list');
 
 const menuButtonChanges = () => {
     hamburger.classList.remove('open');
-    dropdownMenu.classList.add('hidden');
+    dropdownMenu.classList.add('menu__list__hidden');
 };
 
-topMovies.addEventListener('click', (event) => {
+function domChanges (event, name) {
     event.preventDefault();
     tvShows.append(loading);
-    new DataBaseService().getTopRatedMovies().then(createDataForRender).then(deleteCardList).then(renderCard);
-    contentHeader.innerHTML =`Список лучших фильмов`;
+    notFound.classList.add('hide');
+    contentHeader.innerHTML = name;
     menuButtonChanges();
+}
+
+topMovies.addEventListener('click', (event) => {
+    domChanges(event, `Список лучших фильмов`);
+    new DataBaseService().getTopRatedMovies().then(createDataForRender).then(deleteCardList).then(renderCard);
 });
 
 popMovies.addEventListener('click', (event) => {
-    event.preventDefault();
-    tvShows.append(loading);
-    viewMorePointer = 3;
+    domChanges(event, `Список популярных фильмов`);
     new DataBaseService().getPopularMovies().then(createDataForRender).then(deleteCardList).then(renderCard);
-    contentHeader.innerHTML =`Список популярных фильмов`;
-    menuButtonChanges();
 });
 
 latestMovies.addEventListener('click', (event) => {
-    event.preventDefault();
-    tvShows.append(loading);
+    domChanges(event, `Новинки кино`);
     new DataBaseService().getNowPlayingMovies().then(createDataForRender).then(deleteCardList).then(renderCard);
-    contentHeader.innerHTML =`Новинки кино`;
-    menuButtonChanges();
 });
 
 topTVs.addEventListener('click', (event) => {
-    event.preventDefault();
-    tvShows.append(loading);
+    domChanges(event, `Список лучших сериалов`);
     new DataBaseService().getTopRatedTVs().then(createDataForRender).then(deleteCardList).then(renderCard);
-    contentHeader.innerHTML =`Список лучших сериалов`;
-    menuButtonChanges();
 });
 
 popTVs.addEventListener('click', (event) => {
-    event.preventDefault();
-    tvShows.append(loading);
+    domChanges(event, `Список популярных сериалов`);
     new DataBaseService().getPopularTVs().then(createDataForRender).then(deleteCardList).then(renderCard);
-    contentHeader.innerHTML =`Список популярных сериалов`;
-    menuButtonChanges();
 });
 
 latestTVs.addEventListener('click', (event) => {
-    event.preventDefault();
-    tvShows.append(loading);
+    domChanges(event, `Сериалы в эфире`);
     new DataBaseService().getOnTheAirTVs().then(createDataForRender).then(deleteCardList).then(renderCard);
-    contentHeader.innerHTML =`Сериалы в эфире`;
-    menuButtonChanges();
 });
 
 //работа кнопки "загрузить еще"
@@ -175,7 +164,7 @@ viewMoreButton.addEventListener('click', (event) => {
     } else if (contentHeader.innerHTML == `Сериалы в эфире`) {
         new DataBaseService().getOnTheAirTVs(viewMorePointer).then(createDataForRender).then(renderCard);
         viewMorePointer++;
-    } else if (contentHeader.innerHTML == `Ожидаемые фильмы и новинки проката`) {
+    } else if (contentHeader.innerHTML == `Возможно, вам понравится`) {
         new DataBaseService().getUpcomingMovies(viewMorePointer).then(createDataForRender).then(renderCard);
         viewMorePointer++;
     };

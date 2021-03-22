@@ -19,6 +19,9 @@
         align-items: flex-start;
         padding-left: 50px;
         padding-top: 20px;
+        @media screen and (max-width: 480px) {
+            padding-left: 25px;
+        }
         span {
             display: block;
             margin: 10px 0;
