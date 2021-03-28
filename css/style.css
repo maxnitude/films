@@ -1475,6 +1475,7 @@ button, a, li, div, span {
 @media screen and (max-width: 576px) {
   .modal {
     transition: all 600ms cubic-bezier(0.25, 0, 0.07, 0.86);
+    height: 100%;
   }
 }
 
@@ -1618,13 +1619,14 @@ button, a, li, div, span {
 
 @media screen and (max-width: 576px) {
   .cross {
+    position: absolute;
     display: block;
     width: 40px;
     height: 40px;
     background-color: rgba(255, 255, 255, 0.7);
     border-radius: 50%;
     box-shadow: 0 0 5px #2e2e2e;
-    top: 85%;
+    top: 80%;
     left: 80%;
   }
 }
