@@ -9,7 +9,7 @@ const tvShows = document.querySelector('.tv-shows');
 //прелоадер
 const loading = document.createElement ('div');
 loading.className = 'preloader-loading';
-//модальное окно
+
 const modal = document.querySelector('.modal'),
         tvCardImgModal = document.querySelector('.modal__poster-image'),
         modalTitle = document.querySelector('.modal__title'),
@@ -30,6 +30,68 @@ document.addEventListener('keydown', event => {
             modal.classList.add('modal-hide');
         }
     });;
+const modalAlert = document.querySelector ('.modal__alert'),
+        modalAlertContent = document.querySelector ('.modal__alert-content_title'),
+        modalAlertAbout = document.querySelector ('.modal__alert-content_about'),
+        modalAlertInfo = document.querySelector ('.modal__alert-info');
+
+modalAlert.addEventListener('click', event => {
+    if (event.target.closest('.cross__alert') || event.target.classList.contains('modal__alert')) {
+        document.body.style.overflow = '';
+        modalAlert.classList.add('hide');
+        modalAlertInfo.classList.add('hide');
+    }
+});
+
+modalAlertAbout.addEventListener('click', (event) => {
+    event.preventDefault();
+    modalAlertInfo.classList.remove('hide');
+});;
+let sliderIndex = 1,
+    slides = document.querySelectorAll('.slider-item'),
+    prev = document.querySelector('.prev'),
+    next = document.querySelector('.next'),
+    dotsWrap = document.querySelector('.slider-dots'),
+    dots = document.querySelectorAll('.dot');
+
+showSlides(sliderIndex);
+
+function showSlides(n) {
+    if (n > slides.length) {
+        sliderIndex = 1;
+    }
+    if (n < 1) {
+        sliderIndex = slides.length;
+    }  
+    slides.forEach((item) => item.style.display = 'none');
+    dots.forEach((item) => item.classList.remove('dot-active'));
+    slides[sliderIndex - 1].style.display = 'flex';
+    dots[sliderIndex - 1].classList.add('dot-active');
+} 
+    
+function plusSlides(n) {
+    showSlides(sliderIndex += n);
+}
+
+function currentSlide (n) {
+    showSlides(sliderIndex = n);
+}
+
+prev.addEventListener ('click', function() {
+    plusSlides(-1);
+});
+
+next.addEventListener ('click', function() {
+     plusSlides(1);
+});
+
+dotsWrap.addEventListener('click', function(event) {
+    for (let i = 0; i < dots.length + 1; i++) {
+        if(event.target.classList.contains('dot') && event.target == dots[i-1]) {
+            currentSlide(i);
+        }
+    }
+});;
 
 
 let allGenres = []; //массив с жанрами заполняется при рендере главной страницы
@@ -57,7 +119,7 @@ const DataBaseService = class {
         return  this.getData(`${this.SERVER}/genre/movie/list?api_key=${this.API_KEY}&language=ru-RU`)
     }
 
-    getPopularMovies =  (page = 2) => {
+    getPopularMovies =  (page = 1) => {
         return  this.getData(`${this.SERVER}/movie/popular?api_key=${this.API_KEY}&language=ru-RU&page=${page}`)
     }
 
@@ -206,7 +268,6 @@ function renderCard(response) {
         });
         loading.remove();
 
-
         //открытие модального окна с фильмом
         itemList.addEventListener('click', event => {
             event.preventDefault();
@@ -223,10 +284,10 @@ function renderCard(response) {
                             let newItem = item[0].toUpperCase() + item.slice(1);
                             genresList.innerHTML += `<li>${newItem}</li>`;
                         });
-                        rating.textContent = response[i].vote !== 0 ? response[i].vote : 'Без рейтинга';
-                        description.textContent = response[i].overview;
 
-                        //console.log(response[i])
+                        const realRating = response[i].vote !== 0 && response[i].voteCount > 50 ? response[i].vote : `${response[i].vote} (мало оценок)`
+                        rating.textContent = response[i].vote !== 0 ? realRating : 'Без рейтинга';
+                        description.textContent = response[i].overview !== '' ? response[i].overview : 'отсутствует';
                     }
                 }
             };
@@ -239,27 +300,9 @@ function renderCard(response) {
 
 //вспомогательная функция, которая стирает ранее отображенные карточки при новом запросе
 const deleteCardList = function (response) {
-    itemList.textContent = ''; //очистка карточек
+    itemList.textContent = ''; 
     return response;
 }
-
-const modalAlert = document.querySelector ('.modal__alert'),
-        modalAlertContent = document.querySelector ('.modal__alert-content_title'),
-        modalAlertAbout = document.querySelector ('.modal__alert-content_about'),
-        modalAlertInfo = document.querySelector ('.modal__alert-info');
-
-modalAlert.addEventListener('click', event => {
-    if (event.target.closest('.cross__alert') || event.target.classList.contains('modal__alert')) {
-        document.body.style.overflow = '';
-        modalAlert.classList.add('hide');
-        modalAlertInfo.classList.add('hide');
-    }
-});
-
-modalAlertAbout.addEventListener('click', (event) => {
-    event.preventDefault();
-    modalAlertInfo.classList.remove('hide');
-});;
 
 //открытие-закрытие меню
 menuButton.addEventListener('click', (event) => {
@@ -284,6 +327,7 @@ searchForm.addEventListener('submit', event => {
     event.preventDefault();
     const value = searchFormInput.value;
     searchRequestText = value;
+    notFound.classList.add('hide');
     if (value === '' || value.trim() == 0) {
         modalAlert.classList.remove('hide');
         modalAlertContent.textContent = 'Вы ввели пустой поисковый запрос. Попробуйте повторить попытку. '
@@ -303,12 +347,16 @@ searchForm.addEventListener('submit', event => {
 //появление в поисковой строке крестика для удаления содержимого
 const searchCross = document.querySelector ('.search__cross');
 searchFormInput.oninput = function () {
-    searchCross.classList.remove('hide');
-    searchCross.addEventListener ('click', () => {
+    searchCross.classList.remove('hide'); 
+    if (!searchFormInput.value) {
+        searchCross.classList.add('hide'); 
+    } 
+}
+
+searchCross.addEventListener ('click', () => {
     searchFormInput.value = '';
     searchCross.classList.add('hide');
-    });
-}
+});
 
 //отработка пунктов меню
 const latestMovies = document.querySelector ('.latest-movies'),
@@ -396,51 +444,3 @@ viewMoreButton.addEventListener('click', (event) => {
         viewMorePointer++;
     };
 });
-
-
-//слайдер
-let sliderIndex = 1,
-    slides = document.querySelectorAll('.slider-item'),
-    prev = document.querySelector('.prev'),
-    next = document.querySelector('.next'),
-    dotsWrap = document.querySelector('.slider-dots'),
-    dots = document.querySelectorAll('.dot');
-
-showSlides(sliderIndex);
-
-function showSlides(n) {
-    if (n > slides.length) {
-        sliderIndex = 1;
-    }
-    if (n < 1) {
-        sliderIndex = slides.length;
-    }  
-    slides.forEach((item) => item.style.display = 'none');
-    dots.forEach((item) => item.classList.remove('dot-active'));
-    slides[sliderIndex - 1].style.display = 'flex';
-    dots[sliderIndex - 1].classList.add('dot-active');
-} 
-    
-function plusSlides(n) {
-    showSlides(sliderIndex += n);
-}
-
-function currentSlide (n) {
-    showSlides(sliderIndex = n);
-}
-
-prev.addEventListener ('click', function() {
-    plusSlides(-1);
-});
-
-next.addEventListener ('click', function() {
-     plusSlides(1);
-});
-
-dotsWrap.addEventListener('click', function(event) {
-    for (let i = 0; i < dots.length + 1; i++) {
-        if(event.target.classList.contains('dot') && event.target == dots[i-1]) {
-            currentSlide(i);
-        }
-    }
-});;
