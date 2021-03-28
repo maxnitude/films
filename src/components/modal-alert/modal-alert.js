@@ -4,7 +4,7 @@ const modalAlert = document.querySelector ('.modal__alert'),
         modalAlertInfo = document.querySelector ('.modal__alert-info');
 
 modalAlert.addEventListener('click', event => {
-    if (event.target.closest('.cross__alert') || event.target.classList.contains('modalAlert')) {
+    if (event.target.closest('.cross__alert') || event.target.classList.contains('modal__alert')) {
         document.body.style.overflow = '';
         modalAlert.classList.add('hide');
         modalAlertInfo.classList.add('hide');

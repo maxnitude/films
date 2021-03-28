@@ -21,7 +21,7 @@ const DataBaseService = class {
         return  this.getData(`${this.SERVER}/genre/movie/list?api_key=${this.API_KEY}&language=ru-RU`)
     }
 
-    getPopularMovies =  (page = 2) => {
+    getPopularMovies =  (page = 1) => {
         return  this.getData(`${this.SERVER}/movie/popular?api_key=${this.API_KEY}&language=ru-RU&page=${page}`)
     }
 

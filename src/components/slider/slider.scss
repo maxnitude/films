@@ -8,14 +8,14 @@
     }
 }
 
-.slider-container:before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background-image: url(../img/polygon.svg);
-}
+// .slider-container:before {
+//     content: "";
+//     position: absolute;
+//     width: 100%;
+//     height: 100%;
+//     z-index: -1;
+//     background-image: url(../img/polygon.svg);
+// }
 
 .slider-wrapper {
     max-width: 1200px;
@@ -86,7 +86,26 @@
     width: 100%;
     height: 100%;
     background-color: #000;
+    &:nth-child(2) {
+        background-image: url(../../img/posters/lea.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position:  top center;
+    }
+    &:nth-child(3) {
+        background-image: url(../../img/posters/godking.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+    }
+    &:nth-child(4) {
+        background-image: url(../../img/posters/rayyajpg.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position:  50% center;
+    }
 }
+
 
 .film-description {
     width: 50%;
@@ -157,7 +176,6 @@
         }
     }
 }
-
 
 .film-poster {
     width: 50%;

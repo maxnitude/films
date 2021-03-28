@@ -35,7 +35,9 @@ let {
     fileinclude = require('gulp-file-include'),
     del = require('del'),
     scss = require('gulp-sass'),
+    autoprefixer = require('gulp-autoprefixer'),
     imagemin = require('gulp-imagemin');
+    
 
 gulp.task('deploy', function () {
     return gulp.src('./dist/**/*')
@@ -65,6 +67,11 @@ function css() {
             scss({
                 outputStyle: 'expanded'
             })
+        )
+        .pipe (
+            autoprefixer(
+                ['last 15 versions', '> 1%', 'ie 8', 'ie 7'], 
+                { cascade: true })
         )
         .pipe(dest(path.build.css))
         .pipe(browsersync.stream())

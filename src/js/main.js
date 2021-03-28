@@ -9,8 +9,10 @@ const tvShows = document.querySelector('.tv-shows');
 //прелоадер
 const loading = document.createElement ('div');
 loading.className = 'preloader-loading';
-//модальное окно
+
 @@include('../components/modal/modal.js');
+@@include('../components/modal-alert/modal-alert.js');
+@@include('../components/slider/slider.js');
 
 
 let allGenres = []; //массив с жанрами заполняется при рендере главной страницы
@@ -28,11 +30,9 @@ new DataBaseService().getAllGenres().then((response) => {
 
 //вспомогательная функция, которая стирает ранее отображенные карточки при новом запросе
 const deleteCardList = function (response) {
-    itemList.textContent = ''; //очистка карточек
+    itemList.textContent = ''; 
     return response;
 }
-
-@@include('../components/modal-alert/modal-alert.js');
 
 //открытие-закрытие меню
 menuButton.addEventListener('click', (event) => {
@@ -57,6 +57,7 @@ searchForm.addEventListener('submit', event => {
     event.preventDefault();
     const value = searchFormInput.value;
     searchRequestText = value;
+    notFound.classList.add('hide');
     if (value === '' || value.trim() == 0) {
         modalAlert.classList.remove('hide');
         modalAlertContent.textContent = 'Вы ввели пустой поисковый запрос. Попробуйте повторить попытку. '
@@ -76,12 +77,16 @@ searchForm.addEventListener('submit', event => {
 //появление в поисковой строке крестика для удаления содержимого
 const searchCross = document.querySelector ('.search__cross');
 searchFormInput.oninput = function () {
-    searchCross.classList.remove('hide');
-    searchCross.addEventListener ('click', () => {
+    searchCross.classList.remove('hide'); 
+    if (!searchFormInput.value) {
+        searchCross.classList.add('hide'); 
+    } 
+}
+
+searchCross.addEventListener ('click', () => {
     searchFormInput.value = '';
     searchCross.classList.add('hide');
-    });
-}
+});
 
 //отработка пунктов меню
 const latestMovies = document.querySelector ('.latest-movies'),
@@ -169,7 +174,3 @@ viewMoreButton.addEventListener('click', (event) => {
         viewMorePointer++;
     };
 });
-
-
-//слайдер
-@@include('../components/slider/slider.js');

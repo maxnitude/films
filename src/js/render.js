@@ -115,7 +115,6 @@ function renderCard(response) {
         });
         loading.remove();
 
-
         //открытие модального окна с фильмом
         itemList.addEventListener('click', event => {
             event.preventDefault();
@@ -132,10 +131,10 @@ function renderCard(response) {
                             let newItem = item[0].toUpperCase() + item.slice(1);
                             genresList.innerHTML += `<li>${newItem}</li>`;
                         });
-                        rating.textContent = response[i].vote !== 0 ? response[i].vote : 'Без рейтинга';
-                        description.textContent = response[i].overview;
 
-                        //console.log(response[i])
+                        const realRating = response[i].vote !== 0 && response[i].voteCount > 50 ? response[i].vote : `${response[i].vote} (мало оценок)`
+                        rating.textContent = response[i].vote !== 0 ? realRating : 'Без рейтинга';
+                        description.textContent = response[i].overview !== '' ? response[i].overview : 'отсутствует';
                     }
                 }
             };
