@@ -1139,21 +1139,21 @@ button, a, li, div, span {
 }
 
 .slider-item:nth-child(2) {
-  background-image: url(../../img/posters/lea.jpg);
+  background-image: url(../img/posters/lea.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top center;
 }
 
 .slider-item:nth-child(3) {
-  background-image: url(../../img/posters/godking.jpg);
+  background-image: url(../img/posters/godking.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
 }
 
 .slider-item:nth-child(4) {
-  background-image: url(../../img/posters/rayyajpg.jpg);
+  background-image: url(../img/posters/rayyajpg.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% center;
