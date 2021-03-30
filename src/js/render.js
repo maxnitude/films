@@ -80,34 +80,51 @@ function renderCard(response) {
         loading.remove();
         viewMore.classList.add('hide');
     } else {
+        const createVoteElement = (vote, count) => {
+            if (count > 50) {
+                if (vote >= 7) {
+                    return `<span class="tv-card__top-vote">${vote}</span>`;
+                } else if (vote >= 5 && vote < 7) {
+                    return `<span class="tv-card__middle-vote">${vote}</span>`;
+                } else if (vote < 5) {
+                    return `<span class="tv-card__low-vote">${vote}</span>`;
+                };
+            } else {
+                return `<span class="tv-card__middle-vote">—</span>`;
+            };
+        };
+
+        const createCardTitle = (year, genres) => {
+            if (year === ' ' && genres.length == 0) {
+                return ''
+            } else if (year !== ' ' && genres.length == 0) {
+                return year
+            } else if (year === ' ' && genres.length >= 2) {
+                return genres[0][0].toUpperCase() + genres[0].slice(1) + ' ,' + genres[1]
+            } else if (year === ' ' && genres.length == 1) {
+                return genres[0][0].toUpperCase() + genres[0].slice(1)
+            } else if (year !== ' ' && genres.length) {
+                return year + ', ' + genres[0]
+            }
+        }
+
         response.forEach(item => {
+            const {yearOfRealise, genres, voteCount, vote, id, posterIMG, backdropIMG, title} = item;
             const card = document.createElement('div');
             card.className = 'tv-shows__item';
-            let createVoteElement = () => {
-                if (item.voteCount > 50) {
-                    if (item.vote >= 7) {
-                        return `<span class="tv-card__top-vote">${item.vote}</span>`;
-                    } else if (item.vote >= 5 && item.vote < 7) {
-                        return `<span class="tv-card__middle-vote">${item.vote}</span>`;
-                    } else if (item.vote < 5) {
-                        return `<span class="tv-card__low-vote">${item.vote}</span>`;
-                    };
-                } else {
-                    return `<span class="tv-card__middle-vote">—</span>`;
-                };
-            };
-            const voteElement = createVoteElement();
-            card.id = item.id;
+            const cardTitle = createCardTitle(yearOfRealise, genres);
+            const voteElement = createVoteElement(vote, voteCount);
+            card.id = id;
             card.innerHTML = `
                 <a href="#" class="tv-card">
                 ${voteElement}
                 <img class="tv-card__img"
-                    src="${item.posterIMG}"
-                    data-backdrop="${item.backdropIMG}"
-                    alt="${item.title}">
-                <h4 class="tv-card__head">${item.title}</h4>
+                    src="${posterIMG}"
+                    data-backdrop="${backdropIMG}"
+                    alt="${title}">
+                <h4 class="tv-card__head">${title}</h4>
                 <h5 class="tv-card__info">
-                    ${item.yearOfRealise !== ' ' ? item.yearOfRealise : item.genres[1][0].toUpperCase() + item.genres[1].slice(1)}${item.genres[0] ? ', ' + item.genres[0] : ''}
+                ${cardTitle}
                 </h5>
                 </a>
                 `;
@@ -127,10 +144,12 @@ function renderCard(response) {
                         modal.classList.remove("modal-hide");
                         modalTitle.textContent = response[i].title;
                         tvCardImgModal.src = response[i].posterIMG;
-                        response[i].genres.forEach(item => {
+                        response[i].genres.length > 0 
+                        ? response[i].genres.forEach(item => {
                             let newItem = item[0].toUpperCase() + item.slice(1);
                             genresList.innerHTML += `<li>${newItem}</li>`;
-                        });
+                        })
+                        : genresList.innerHTML = '<li>Описание отсутствует</li>';
 
                         const realRating = response[i].vote !== 0 && response[i].voteCount > 50 ? response[i].vote : `${response[i].vote} (мало оценок)`
                         rating.textContent = response[i].vote !== 0 ? realRating : 'Без рейтинга';
