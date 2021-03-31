@@ -153,6 +153,7 @@ new DataBaseService().getAllGenres().then((response) => {
 
 function createDataForRender(response) {
     let items = response.results;
+    let page = response.page;
     let filmsArray = [];
 
     function createCardData() {
@@ -213,21 +214,23 @@ function createDataForRender(response) {
     if (response.results.length == 0) {
         notFound.innerHTML = 'По вашему запросу ничего не найдено :(';
         notFound.classList.remove('hide');
-        return null;
+        return [null, page];
     } else if (response.results.length > 0 && response.results.length < 20) {
         viewMore.classList.add('hide');
         createCardData();
-        return filmsArray;
+        return [filmsArray, page];
     } else {
         createCardData();
         viewMore.classList.remove('hide');
-        return filmsArray;
+        return [filmsArray, page];
     }
+
 }
 
 // генерация карточки с фильмом 
 function renderCard(response) {
-    if (response === null) {
+    let page = response[1];
+    if (response[0] === null) {
         contentHeader.innerHTML = `Возможно, вам понравится`;
         new DataBaseService().getUpcomingMovies().then(createDataForRender).then(renderCard);
         loading.remove();
@@ -261,7 +264,7 @@ function renderCard(response) {
             }
         }
 
-        response.forEach(item => {
+        response[0].forEach(item => {
             const {yearOfRealise, genres, voteCount, vote, id, posterIMG, backdropIMG, title} = item;
             const card = document.createElement('div');
             card.className = 'tv-shows__item';
@@ -289,24 +292,23 @@ function renderCard(response) {
         itemList.addEventListener('click', event => {
             event.preventDefault();
             const cardTap = event.target.closest('.tv-shows__item');
-
             function showModal(elementId) {
-                for (let i = 0; i < response.length; i++) {
-                    if (response[i].id == elementId) {
+                for (let i = 0; i < response[0].length; i++) {
+                    if (response[0][i].id == elementId) {
                         genresList.innerHTML = ``;
                         modal.classList.remove("modal-hide");
-                        modalTitle.textContent = response[i].title;
-                        tvCardImgModal.src = response[i].posterIMG;
-                        response[i].genres.length > 0 
-                        ? response[i].genres.forEach(item => {
+                        modalTitle.textContent = response[0][i].title;
+                        tvCardImgModal.src = response[0][i].posterIMG;
+                        response[0][i].genres.length > 0 
+                        ? response[0][i].genres.forEach(item => {
                             let newItem = item[0].toUpperCase() + item.slice(1);
                             genresList.innerHTML += `<li>${newItem}</li>`;
                         })
                         : genresList.innerHTML = '<li>Описание отсутствует</li>';
 
-                        const realRating = response[i].vote !== 0 && response[i].voteCount > 50 ? response[i].vote : `${response[i].vote} (мало оценок)`
-                        rating.textContent = response[i].vote !== 0 ? realRating : 'Без рейтинга';
-                        description.textContent = response[i].overview !== '' ? response[i].overview : 'отсутствует';
+                        const realRating = response[0][i].vote !== 0 && response[0][i].voteCount > 50 ? response[0][i].vote : `${response[0][i].vote} (мало оценок)`
+                        rating.textContent = response[0][i].vote !== 0 ? realRating : 'Без рейтинга';
+                        description.textContent = response[0][i].overview !== '' ? response[0][i].overview : 'отсутствует';
                     }
                 }
             };
@@ -314,7 +316,8 @@ function renderCard(response) {
                 showModal(cardTap.id)
             };
         });
-    }
+    };
+    return page;
 };
 
 //вспомогательная функция, которая стирает ранее отображенные карточки при новом запросе
@@ -431,35 +434,35 @@ latestTVs.addEventListener('click', (event) => {
 });
 
 //работа кнопки "загрузить еще"
-let viewMorePointer = 2; //новый запрос начинается с 2ого пакета данных
+let viewMorePointer = [2, 2, 2, 2, 2, 2, 2, 2]; //новый запрос начинается с 2ого пакета данных
 const viewMore = document.querySelector ('.view_more');
 const viewMoreButton = document.querySelector ('.view_more-button');
 viewMoreButton.addEventListener('click', (event) => {
     event.preventDefault();
-    viewMore.append(loading);
+    tvShows.append(loading);
     if (contentHeader.innerHTML == `Результаты поиска`) {
-        new DataBaseService().getSearchResult(searchRequestText, viewMorePointer).then(createDataForRender).then(renderCard);
-        viewMorePointer++;
+        new DataBaseService().getSearchResult(searchRequestText, viewMorePointer[0]).then(createDataForRender).then(renderCard);
+        viewMorePointer[0]++;
     } else if (contentHeader.innerHTML == `Новинки кино`) {
-        new DataBaseService().getNowPlayingMovies(viewMorePointer).then(createDataForRender).then(renderCard);
-        viewMorePointer++;
+        new DataBaseService().getNowPlayingMovies(viewMorePointer[1]).then(createDataForRender).then(renderCard);
+        viewMorePointer[1]++;
     } else if (contentHeader.innerHTML == `Список популярных фильмов`) {
-        new DataBaseService().getPopularMovies(viewMorePointer).then(createDataForRender).then(renderCard);
-        viewMorePointer++;
+        new DataBaseService().getPopularMovies(viewMorePointer[2]).then(createDataForRender).then(renderCard);
+        viewMorePointer[2]++;
     } else if (contentHeader.innerHTML == `Список лучших фильмов`) {
-        new DataBaseService().getTopRatedMovies(viewMorePointer).then(createDataForRender).then(renderCard);
-        viewMorePointer++;
+        new DataBaseService().getTopRatedMovies(viewMorePointer[3]).then(createDataForRender).then(renderCard);
+        viewMorePointer[3]++;
     } else if (contentHeader.innerHTML == `Список лучших сериалов`) {
-        new DataBaseService().getTopRatedTVs(viewMorePointer).then(createDataForRender).then(renderCard);
-        viewMorePointer++;
+        new DataBaseService().getTopRatedTVs(viewMorePointer[4]).then(createDataForRender).then(renderCard);
+        viewMorePointer[4]++;
     } else if (contentHeader.innerHTML == `Список популярных сериалов`) {
-        new DataBaseService().getPopularTVs(viewMorePointer).then(createDataForRender).then(renderCard);
-        viewMorePointer++;
+        new DataBaseService().getPopularTVs(viewMorePointer[5]).then(createDataForRender).then(renderCard);
+        viewMorePointer[5]++;
     } else if (contentHeader.innerHTML == `Сериалы в эфире`) {
-        new DataBaseService().getOnTheAirTVs(viewMorePointer).then(createDataForRender).then(renderCard);
-        viewMorePointer++;
+        new DataBaseService().getOnTheAirTVs(viewMorePointer[6]).then(createDataForRender).then(renderCard);
+        viewMorePointer[6]++;
     } else if (contentHeader.innerHTML == `Возможно, вам понравится`) {
-        new DataBaseService().getUpcomingMovies(viewMorePointer).then(createDataForRender).then(renderCard);
-        viewMorePointer++;
+        new DataBaseService().getUpcomingMovies(viewMorePointer[7]).then(createDataForRender).then(renderCard);
+        viewMorePointer[7]++;
     };
 });
