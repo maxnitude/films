@@ -1,5 +1,6 @@
 function createDataForRender(response) {
     let items = response.results;
+    let page = response.page;
     let filmsArray = [];
 
     function createCardData() {
@@ -60,21 +61,23 @@ function createDataForRender(response) {
     if (response.results.length == 0) {
         notFound.innerHTML = 'По вашему запросу ничего не найдено :(';
         notFound.classList.remove('hide');
-        return null;
+        return [null, page];
     } else if (response.results.length > 0 && response.results.length < 20) {
         viewMore.classList.add('hide');
         createCardData();
-        return filmsArray;
+        return [filmsArray, page];
     } else {
         createCardData();
         viewMore.classList.remove('hide');
-        return filmsArray;
+        return [filmsArray, page];
     }
+
 }
 
 // генерация карточки с фильмом 
 function renderCard(response) {
-    if (response === null) {
+    let page = response[1];
+    if (response[0] === null) {
         contentHeader.innerHTML = `Возможно, вам понравится`;
         new DataBaseService().getUpcomingMovies().then(createDataForRender).then(renderCard);
         loading.remove();
@@ -108,7 +111,7 @@ function renderCard(response) {
             }
         }
 
-        response.forEach(item => {
+        response[0].forEach(item => {
             const {yearOfRealise, genres, voteCount, vote, id, posterIMG, backdropIMG, title} = item;
             const card = document.createElement('div');
             card.className = 'tv-shows__item';
@@ -136,24 +139,23 @@ function renderCard(response) {
         itemList.addEventListener('click', event => {
             event.preventDefault();
             const cardTap = event.target.closest('.tv-shows__item');
-
             function showModal(elementId) {
-                for (let i = 0; i < response.length; i++) {
-                    if (response[i].id == elementId) {
+                for (let i = 0; i < response[0].length; i++) {
+                    if (response[0][i].id == elementId) {
                         genresList.innerHTML = ``;
                         modal.classList.remove("modal-hide");
-                        modalTitle.textContent = response[i].title;
-                        tvCardImgModal.src = response[i].posterIMG;
-                        response[i].genres.length > 0 
-                        ? response[i].genres.forEach(item => {
+                        modalTitle.textContent = response[0][i].title;
+                        tvCardImgModal.src = response[0][i].posterIMG;
+                        response[0][i].genres.length > 0 
+                        ? response[0][i].genres.forEach(item => {
                             let newItem = item[0].toUpperCase() + item.slice(1);
                             genresList.innerHTML += `<li>${newItem}</li>`;
                         })
                         : genresList.innerHTML = '<li>Описание отсутствует</li>';
 
-                        const realRating = response[i].vote !== 0 && response[i].voteCount > 50 ? response[i].vote : `${response[i].vote} (мало оценок)`
-                        rating.textContent = response[i].vote !== 0 ? realRating : 'Без рейтинга';
-                        description.textContent = response[i].overview !== '' ? response[i].overview : 'отсутствует';
+                        const realRating = response[0][i].vote !== 0 && response[0][i].voteCount > 50 ? response[0][i].vote : `${response[0][i].vote} (мало оценок)`
+                        rating.textContent = response[0][i].vote !== 0 ? realRating : 'Без рейтинга';
+                        description.textContent = response[0][i].overview !== '' ? response[0][i].overview : 'отсутствует';
                     }
                 }
             };
@@ -161,5 +163,6 @@ function renderCard(response) {
                 showModal(cardTap.id)
             };
         });
-    }
+    };
+    return page;
 }

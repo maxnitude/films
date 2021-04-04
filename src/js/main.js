@@ -142,35 +142,35 @@ latestTVs.addEventListener('click', (event) => {
 });
 
 //работа кнопки "загрузить еще"
-let viewMorePointer = 2; //новый запрос начинается с 2ого пакета данных
+let viewMorePointer = [2, 2, 2, 2, 2, 2, 2, 2]; //новый запрос начинается с 2ого пакета данных
 const viewMore = document.querySelector ('.view_more');
 const viewMoreButton = document.querySelector ('.view_more-button');
 viewMoreButton.addEventListener('click', (event) => {
     event.preventDefault();
-    viewMore.append(loading);
+    tvShows.append(loading);
     if (contentHeader.innerHTML == `Результаты поиска`) {
-        new DataBaseService().getSearchResult(searchRequestText, viewMorePointer).then(createDataForRender).then(renderCard);
-        viewMorePointer++;
+        new DataBaseService().getSearchResult(searchRequestText, viewMorePointer[0]).then(createDataForRender).then(renderCard);
+        viewMorePointer[0]++;
     } else if (contentHeader.innerHTML == `Новинки кино`) {
-        new DataBaseService().getNowPlayingMovies(viewMorePointer).then(createDataForRender).then(renderCard);
-        viewMorePointer++;
+        new DataBaseService().getNowPlayingMovies(viewMorePointer[1]).then(createDataForRender).then(renderCard);
+        viewMorePointer[1]++;
     } else if (contentHeader.innerHTML == `Список популярных фильмов`) {
-        new DataBaseService().getPopularMovies(viewMorePointer).then(createDataForRender).then(renderCard);
-        viewMorePointer++;
+        new DataBaseService().getPopularMovies(viewMorePointer[2]).then(createDataForRender).then(renderCard);
+        viewMorePointer[2]++;
     } else if (contentHeader.innerHTML == `Список лучших фильмов`) {
-        new DataBaseService().getTopRatedMovies(viewMorePointer).then(createDataForRender).then(renderCard);
-        viewMorePointer++;
+        new DataBaseService().getTopRatedMovies(viewMorePointer[3]).then(createDataForRender).then(renderCard);
+        viewMorePointer[3]++;
     } else if (contentHeader.innerHTML == `Список лучших сериалов`) {
-        new DataBaseService().getTopRatedTVs(viewMorePointer).then(createDataForRender).then(renderCard);
-        viewMorePointer++;
+        new DataBaseService().getTopRatedTVs(viewMorePointer[4]).then(createDataForRender).then(renderCard);
+        viewMorePointer[4]++;
     } else if (contentHeader.innerHTML == `Список популярных сериалов`) {
-        new DataBaseService().getPopularTVs(viewMorePointer).then(createDataForRender).then(renderCard);
-        viewMorePointer++;
+        new DataBaseService().getPopularTVs(viewMorePointer[5]).then(createDataForRender).then(renderCard);
+        viewMorePointer[5]++;
     } else if (contentHeader.innerHTML == `Сериалы в эфире`) {
-        new DataBaseService().getOnTheAirTVs(viewMorePointer).then(createDataForRender).then(renderCard);
-        viewMorePointer++;
+        new DataBaseService().getOnTheAirTVs(viewMorePointer[6]).then(createDataForRender).then(renderCard);
+        viewMorePointer[6]++;
     } else if (contentHeader.innerHTML == `Возможно, вам понравится`) {
-        new DataBaseService().getUpcomingMovies(viewMorePointer).then(createDataForRender).then(renderCard);
-        viewMorePointer++;
+        new DataBaseService().getUpcomingMovies(viewMorePointer[7]).then(createDataForRender).then(renderCard);
+        viewMorePointer[7]++;
     };
 });
